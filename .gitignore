@@ -39,4 +39,13 @@ Temporary Items
 *Dockerfile*
 *docker-compose*
 
+## Node / Cloudflare Workers ##
+node_modules/
+# wrangler のローカル状態（ローカル D1 の中身など）
+.wrangler/
+# ローカル開発用の設定。DEV_EMAIL などが入るので共有しない
+.dev.vars
+# wrangler types が自動生成する型定義
+worker-configuration.d.ts
+
 # End of https://www.toptal.com/developers/gitignore/api/macos

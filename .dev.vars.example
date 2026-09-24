@@ -1,0 +1,8 @@
+# ローカル開発用の設定ファイルの見本。
+# このファイルを `.dev.vars` という名前でコピーして使う（.dev.vars は git に入らない）。
+#
+# ローカルでは Cloudflare Access が前に立たないため、
+# 「誰としてログインしているか」をここで決める。
+# wrangler.jsonc の ACCESS_TEAM_DOMAIN / ACCESS_AUD を設定すると、
+# 本番と同じく Access の検証が必須になり、この値は無視される。
+DEV_EMAIL=you@example.com

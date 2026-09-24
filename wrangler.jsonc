@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  // Worker（サーバ側プログラム）の名前。デプロイ時の URL にも使われる。
+  "name": "bt-bookshelf",
+  // リクエストを最初に受け取るファイル。
+  "main": "src/index.ts",
+  // Workers ランタイムの「どの時点の仕様で動かすか」を指定する日付。
+  "compatibility_date": "2026-09-01",
+
+  // ---- 静的ファイル（HTML/CSS/JS）の配信設定 ----
+  // public/ 以下のファイルは Worker を経由せずそのまま配信される。
+  // URL に一致するファイルが無かった場合だけ Worker（src/index.ts）が呼ばれるので、
+  // /api/... へのリクエストはすべて Worker が処理することになる。
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "none"
+  },
+
+  // ---- D1（SQL データベース）----
+  // database_id は `wrangler d1 create bt-bookshelf-db` を実行すると発行される。
+  // ローカル開発（wrangler dev）では実物の DB ではなく手元の SQLite が使われるため、
+  // この ID が未設定でもローカルでは動作する。
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bt-bookshelf-db",
+      "database_id": "PLACEHOLDER_RUN_WRANGLER_D1_CREATE",
+      "migrations_dir": "./migrations"
+    }
+  ],
+
+  // ---- R2（画像などのファイル置き場）----
+  // 書影の保存先。Phase 4 で本格的に使うが、先に枠だけ用意しておく。
+  "r2_buckets": [
+    {
+      "binding": "COVERS",
+      "bucket_name": "bt-bookshelf-covers"
+    }
+  ],
+
+  // ---- 環境変数（秘密ではない設定値）----
+  // Cloudflare Access を有効にしたあと、この 2 つを埋める。
+  // 空のままだとアプリは「Access 未設定」と判断し、ローカル開発用の
+  // ログイン（.dev.vars の DEV_EMAIL）だけを受け付ける。
+  "vars": {
+    // 例: "your-team.cloudflareaccess.com"
+    "ACCESS_TEAM_DOMAIN": "",
+    // Access のアプリケーション設定画面に表示される Application Audience (AUD) Tag
+    "ACCESS_AUD": ""
+  },
+
+  // 実行ログを Cloudflare 側に記録する（`wrangler tail` で見られる）。
+  "observability": {
+    "enabled": true
+  }
+}
