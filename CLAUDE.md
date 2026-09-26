@@ -11,7 +11,6 @@ Planning artifacts, all still current:
 - `specification.md` — the authoritative spec for a book-collection management app (蔵書管理アプリ). It is actively being revised by the user in small increments; always re-read it before starting implementation work rather than relying on a summary from a past session.
 - `testdata.txt` — sample ISBNs plus raw openBD API JSON responses for those ISBNs, used as reference data when building the API-integration layer. Note the comment inside it: hyphens in scanned/typed ISBNs must be stripped before lookup (`9--7-8-4...` ≡ `9784...`).
 - `IMG_7720.jpeg` — a visual reference (from 『シメジシミュレーション』第2巻, p56) for the "graph of connected books" concept behind the clustering/visualization screen; the tree motif itself is not required, only the graph-with-icons-and-edges layout.
-- `diff_output.patch` — a working diff of recent spec edits; not part of the app.
 
 ## Commands
 
